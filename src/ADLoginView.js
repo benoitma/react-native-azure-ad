@@ -13,6 +13,7 @@ export default class ADLoginView extends React.Component {
 
   props : {
     onSuccess? : ?Function,
+    onError? : ?Function,
     renderError? : ?Function,
     needLogout? : bool,
     style : any,
@@ -31,6 +32,7 @@ export default class ADLoginView extends React.Component {
     tenant : 'common',
     onSuccess : () => {},
     renderError: () => {},
+    onError: () => {},
     onPageRequest : null
   };
 
@@ -249,7 +251,8 @@ export default class ADLoginView extends React.Component {
       this._lock = false
 
     }).catch((err) => {
-      throw new Error('Failed to acquire token for resources', err.stack)
+      this.props.onError(err);
+      // throw new Error('Failed to acquire token for resources', err.stack)
     })
   }
 
